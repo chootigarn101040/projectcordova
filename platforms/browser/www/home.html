@@ -114,12 +114,12 @@
       <div id="showDataCart"></div>
 
       <script id="cart_template" type="text/template">
-      <ons-list>
+      <ons-list style="background-color:#efc1db">
         
         <% cartData.forEach(function(cartData){
           var cartData = cartData.data(); 
         %>
-        <ons-list-item>
+        <ons-list-item >
           <div class="left">
             <img class="list-item__thumbnail" src="<%=cartData.photo[0]%>">
           </div>
@@ -190,7 +190,7 @@
         var datadep = localStorage.getItem('getDep');
         console.log(datadep)
       </script>
-      <ons-toolbar>
+      <ons-toolbar style="background-color: aquamarine">
         <div class="left">
           <ons-back-button>Back</ons-back-button>
         </div>
@@ -200,7 +200,7 @@
       <div id="showDep"></div>
 
       <script id="Detailproduct_template" type="text/template">
-              <ons-card>
+              <ons-card  style="background-color:#EFA694">
                 <% dataDep.forEach(function(dataDep){   
                         var data = dataDep.data(); %>
                   <ons-carousel swipeable auto-scroll overscrollable id="carousel" style="height: 300px;">
