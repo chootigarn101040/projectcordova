@@ -36,9 +36,8 @@
       padding-bottom: 5px;
       padding-right: 5px;
       color: #efc1db;
-     
+
     }
- 
   </style>
 
 
@@ -46,32 +45,30 @@
 
 
 <body>
-<ons-navigator swipeable id="myNavigator">
-  <ons-page>
-    <ons-toolbar style="background-color: aquamarine">
-      <div class="left">
-        <ons-icon class="toolbaricon" size="30px" icon="md-camera"
-        onclick="window.location.href='scan.html'"> 
-        </ons-icon>
-      </div>
-      <div class="center" id="appname">#</div>
-      <div class="right">
-        <ons-icon class="toolbaricon" size="30px" icon="md-help"
-        onclick="window.location.href='logout.html'">
-        </ons-icon>
-      </div>
-    </ons-toolbar>
+  <ons-navigator swipeable id="myNavigator">
+    <ons-page>
+      <ons-toolbar style="background-color: aquamarine">
+        <div class="left">
+          <ons-icon class="toolbaricon" size="30px" icon="md-camera" onclick="window.location.href='scan.html'">
+          </ons-icon>
+        </div>
+        <div class="center" id="appname">#</div>
+        <div class="right">
+          <ons-icon class="toolbaricon" size="30px" icon="md-help" onclick="window.location.href='logout.html'">
+          </ons-icon>
+        </div>
+      </ons-toolbar>
 
-    <ons-tabbar swipeable position="auto" id="tabbar" >
-      <ons-tab page="tab1.html" label="Home" icon="ion-home, material:md-home"  active style="background-color:aquamarine" >
-      </ons-tab>
-      <ons-tab page="tab2.html" label="Cart" icon="fa-shopping-cart" active-icon="fa-shopping-cart" style="background-color:aquamarine">
-      </ons-tab>
-      <ons-tab page="tab3.html" label="Products" icon="book" active-icon="book" style="background-color:aquamarine" >
-      </ons-tab>
-    </ons-tabbar>
-  </ons-page>
-</ons-navigator>
+      <ons-tabbar swipeable position="auto" id="tabbar">
+        <ons-tab page="tab1.html" label="Home" icon="ion-home, material:md-home" active style="background-color:aquamarine">
+        </ons-tab>
+        <ons-tab page="tab2.html" label="Cart" icon="fa-shopping-cart" active-icon="fa-shopping-cart" style="background-color:aquamarine">
+        </ons-tab>
+        <ons-tab page="tab3.html" label="Products" icon="book" active-icon="book" style="background-color:aquamarine">
+        </ons-tab>
+      </ons-tabbar>
+    </ons-page>
+  </ons-navigator>
 
   <template id="tab1.html">
     <ons-page id="Tab1">
@@ -110,16 +107,20 @@
 
   <template id="tab2.html">
     <ons-page id="Tab2">
-      <p><h5><b>Shopping Cart</b></h5></p>
+      <p>
+        <h5>
+          <b>Shopping Cart</b>
+        </h5>
+      </p>
       <div id="showDataCart"></div>
 
       <script id="cart_template" type="text/template">
-      <ons-list>
+      <ons-list style="background-color:#efc1db">
         
         <% cartData.forEach(function(cartData){
           var cartData = cartData.data(); 
         %>
-        <ons-list-item>
+        <ons-list-item >
           <div class="left">
             <img class="list-item__thumbnail" src="<%=cartData.photo[0]%>">
           </div>
@@ -190,7 +191,7 @@
         var datadep = localStorage.getItem('getDep');
         console.log(datadep)
       </script>
-      <ons-toolbar>
+      <ons-toolbar style="background-color: aquamarine">
         <div class="left">
           <ons-back-button>Back</ons-back-button>
         </div>
@@ -200,7 +201,7 @@
       <div id="showDep"></div>
 
       <script id="Detailproduct_template" type="text/template">
-              <ons-card>
+              <ons-card  style="background-color:#EFA694">
                 <% dataDep.forEach(function(dataDep){   
                         var data = dataDep.data(); %>
                   <ons-carousel swipeable auto-scroll overscrollable id="carousel" style="height: 300px;">
@@ -237,6 +238,7 @@
 <script>
   getHomeData();
   tatol();
+  
   document.addEventListener('prechange', function (event) {
     if (event.index == 0) {
       console.log('Home clicked');
@@ -252,49 +254,61 @@
       var itemPro = localStorage.getItem('itemPro');
       console.log(itemPro);
       // get data for all product screen  
-      if (name2 == null&&itemPro==null) {
+      if (name2 == null && itemPro == null) {
         console.log(name2)
         getAllProduct();
       }
-      else if(name2 != null || itemPro != null) {
-        getAllProduct(name2,itemPro);
+      else if (name2 != null || itemPro != null) {
+        getAllProduct(name2, itemPro);
       }
       localStorage.clear();
     }
   });
+
   function changeTab(name) {
     localStorage.setItem('name', name);
     document.getElementById('tabbar').setActiveTab(2);
   }
   function getHomeData() {
-    var docRef = db.collection("UI").doc("home");
-    docRef.get().then(function (doc) {
-      if (doc.exists) {
-        //display data
-        console.log("Document data:", doc.data());
-        var data = doc.data();
-        $('#appname').html(data.appname);
-        var style = "background: url('" + data.slides[0] + "') no-repeat center; background-size: contain;'";
-        $('#carousel1').attr('style', style)
-        var icon_template = $('#icon_template').html();
-        var html = ejs.render(icon_template, { categories: data.categories });
-        $('#icons').html(html);
-      } else {
-        console.log("No such document!");
-      }
-    }).catch(function (error) {
-      console.log("Error getting document:", error);
-    });
-    //$.getJSON('home.json', function (data) {
-    //  console.log(data);
-    // $('#appname').html(data.appname);
-    // var style = "background: url('images/" + data.slides[0] + "') no-repeat center; background-size: contain;'";
-    // $('#carousel1').attr('style', style)
-    // var icon_template = $('#icon_template').html();
-    // var html = ejs.render(icon_template, { categories: data.categories });
-    //  $('#icons').html(html);
-    // });
+    var code = localStorage.getItem("code");
+    if (code == null) {
+    
+
+     
+      var docRef = db.collection("UI").doc("home");
+      docRef.get().then(function (doc) {
+        if (doc.exists) {
+          //display data
+          console.log("Document data:", doc.data());
+          var data = doc.data();
+          $('#appname').html(data.appname);
+          var style = "background: url('" + data.slides[0] + "') no-repeat center; background-size: contain;'";
+          $('#carousel1').attr('style', style)
+          var icon_template = $('#icon_template').html();
+          var html = ejs.render(icon_template, { categories: data.categories });
+          $('#icons').html(html);
+        } else {
+          console.log("No such document!");
+        }
+      }).catch(function (error) {
+        console.log("Error getting document:", error);
+      });
+    } else {
+      myNavigator.pushPage('detailP.html');
+      showDetailP();
+    }
+
   }
+  //$.getJSON('home.json', function (data) {
+  //  console.log(data);
+  // $('#appname').html(data.appname);
+  // var style = "background: url('images/" + data.slides[0] + "') no-repeat center; background-size: contain;'";
+  // $('#carousel1').attr('style', style)
+  // var icon_template = $('#icon_template').html();
+  // var html = ejs.render(icon_template, { categories: data.categories });
+  //  $('#icons').html(html);
+  // });
+
   function getCartData() {
     var docRef = db.collection("UI").doc("cart");
     docRef.get().then(function (doc) {
@@ -312,9 +326,10 @@
       console.log("Error getting document:", error);
     });
   }
-  function getAllProduct(name2,itemPro) {
+
+  function getAllProduct(name2, itemPro) {
     console.log(itemPro);
-    
+
     if (name2 == null && itemPro == null) {
       var apr = db.collection("products")
       apr.get().then(function (querySnapshot) {
@@ -324,7 +339,7 @@
         $('#allPro').html(html);
       })
     }
-    else if(name2!=undefined&&itemPro==undefined){
+    else if (name2 != undefined && itemPro == undefined) {
       var apr = db.collection("products").where("category", "==", name2);
       apr.get().then(function (querySnapshot) {
         var allPro_template = $('#allPro_template').html();
@@ -335,14 +350,21 @@
     }
   }
   function showDetailP() {
-    var dataproduct = localStorage.getItem('getDep');
+    var code = localStorage.getItem("code");
+    if (code == null) {
+      var dataproduct = localStorage.getItem('getDep');
+    } else if (code != null) {
+      var dataproduct = localStorage.getItem("code");
+    }
     var apr = db.collection("products").where("title", "==", dataproduct);
     apr.get().then(function (querySnapshot) {
       var Detailproduct_template = $('#Detailproduct_template').html();
       var html = ejs.render(Detailproduct_template, { dataDep: querySnapshot.docs });
       $('#showDep').html(html);
     })
+    localStorage.clear("code");
   }
+
   function addNewData() {
     var data = {
       pid: 5,
@@ -364,46 +386,46 @@
     myNavigator.pushPage('detailP.html');
   }
   var dataCart = [];
-function addtocart(add2cart){
-  localStorage.clear('quentinTarantino');
-localStorage.setItem('quentinTarantino',add2cart);
-var retrievedData = localStorage.getItem("quentinTarantino");
-console.log(retrievedData);
-dataCart.push(retrievedData);
-alert(dataCart);
-}
-function getData2cart(){
-  console.log('functioncart');
-  console.log(dataCart);
-  document.getElementById('showDataCart').innerHTML = '';
-  dataCart.forEach(function(dataCart){
-    var apr = db.collection("products").where("title", "==",dataCart);
-    apr.get().then(function (querySnapshot) {
-      console.log(querySnapshot.docs)
-      var cart_template = $('#cart_template').html();
-      var html = ejs.render(cart_template, { cartData: querySnapshot.docs });
-      
-      $('#showDataCart').append(html); 
-    
-    })
-    
-  })
-}
-function search(search) {
-  localStorage.setItem('itemPro',search)
-   const filterItems = (needle, heystack) => {
-    let query = needle.toLowerCase();
-    return heystack.filter(item => item.data().title.toLowerCase().indexOf(needle) >= 0);
+  function addtocart(add2cart) {
+    localStorage.clear('quentinTarantino');
+    localStorage.setItem('quentinTarantino', add2cart);
+    var retrievedData = localStorage.getItem("quentinTarantino");
+    console.log(retrievedData);
+    dataCart.push(retrievedData);
+    alert(dataCart);
   }
-  console.log("55+", filterItems(search, data));
-  var item=filterItems(search, data);
-  console.log("xxx",item)
-  localStorage.setItem('items', item);
-  
-  console.log('tong',item);
-  
-test(item);
-document.getElementById('tabbar').setActiveTab(2);
+  function getData2cart() {
+    console.log('functioncart');
+    console.log(dataCart);
+    document.getElementById('showDataCart').innerHTML = '';
+    dataCart.forEach(function (dataCart) {
+      var apr = db.collection("products").where("title", "==", dataCart);
+      apr.get().then(function (querySnapshot) {
+        console.log(querySnapshot.docs)
+        var cart_template = $('#cart_template').html();
+        var html = ejs.render(cart_template, { cartData: querySnapshot.docs });
+
+        $('#showDataCart').append(html);
+
+      })
+
+    })
+  }
+  function search(search) {
+    localStorage.setItem('itemPro', search)
+    const filterItems = (needle, heystack) => {
+      let query = needle.toLowerCase();
+      return heystack.filter(item => item.data().title.toLowerCase().indexOf(needle) >= 0);
+    }
+    console.log("55+", filterItems(search, data));
+    var item = filterItems(search, data);
+    console.log("xxx", item)
+    localStorage.setItem('items', item);
+
+    console.log('tong', item);
+
+    test(item);
+    document.getElementById('tabbar').setActiveTab(2);
     // localStorage.setItem('title', item);
   }
   const data = []
@@ -415,23 +437,23 @@ document.getElementById('tabbar').setActiveTab(2);
           data.push(item)
           console.log(data)
         });
-        
+
       })
     // const fruits = data[1];
   }
-function test(title){
-console.log("888",title);
-// for(var i =0;i<tests.length;i++){
-    
- 
-    console.log('tset',title);
-        // doc.data() is never undefined for query doc snapshots
-        
-        var allPro_template = $('#allPro_template').html();
-         var html = ejs.render(allPro_template, { allPro: title });
-        $('#allPro').html(html);
-  
- }
+  function test(title) {
+    console.log("888", title);
+    // for(var i =0;i<tests.length;i++){
+
+
+    console.log('tset', title);
+    // doc.data() is never undefined for query doc snapshots
+
+    var allPro_template = $('#allPro_template').html();
+    var html = ejs.render(allPro_template, { allPro: title });
+    $('#allPro').html(html);
+
+  }
 </script>
 
 </html>
