@@ -31,6 +31,13 @@
 
 
 <body>
+        <style type="text/css">
+            body {
+                background-color:pink;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+          </style>
     
     <ons-page ng-controller="PageController as page"> 
 
@@ -42,13 +49,13 @@
                 <ons-input id="password" modifier="underbar" type="password" placeholder="Password" float ng-model="page.password"></ons-input>
             </p>
             <p style="margin-top: 30px;">
-                <ons-button onclick="login()" style="background-color: orange">Sign in</ons-button>
+                <ons-button onclick="login()" style="background-color: rgba(124, 235, 34, 0.959)">Sign in</ons-button>
             </p>
             <p style="margin-top: 30px;">
-                <ons-button onclick="google()" style="background-color: yellowgreen">Sign in with Google</ons-button>
+                <ons-button onclick="google()" style="background-color: rgba(240, 59, 59, 0.993)">Sign in with Google</ons-button>
             </p>
             <p style="margin-top: 30px;">
-                <ons-button onclick="facebook()" style="background-color: tomato">Sign in with Facebook</ons-button>
+                <ons-button onclick="facebook()" style="background-color: rgba(76, 209, 250, 0.89)">Sign in with Facebook</ons-button>
             </p>
             <p style="margin-top: 50px;">
                 <a href="register.html">Sign up for a new user</a>
