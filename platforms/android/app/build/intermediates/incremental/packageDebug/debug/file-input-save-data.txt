@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Wed Nov 14 06:26:21 ICT 2018
+#Wed Nov 14 06:38:27 ICT 2018
 17.baseType=DIRECTORY
 4.path=www/images/x2.jpg
 25.base=D\:\\977-341\\hello\\platforms\\android\\app\\build\\intermediates\\assets\\debug
